@@ -26,3 +26,7 @@ The values at the top of the value `WEIGHT_00`, `WEIGHT_01`, and `WEIGHT_11` can
 to prevent the results from being reliant on account creation date.
 
 `SHIP_THRESHOLD` is used by the `ship()` function to determine which message to output. The messages were written by RafaelScarpa for his Discord bot.
+
+Here is a graph of the distrubution of pairings with the current settings, made from a sample of 3573 actual user IDs for a total of 6381378 pairings:
+
+![test result mody data 1 30 80 7ms bits](https://user-images.githubusercontent.com/24984194/201972327-9375b80d-f7b1-4348-9729-f9d9c87503cd.png)
