@@ -29,4 +29,4 @@ to prevent the results from being reliant on account creation date.
 
 Here is a graph of the distrubution of pairings with the current settings, made from a sample of 3573 actual user IDs for a total of 6381378 pairings:
 
-![test result mody data 1 30 80 7ms bits](https://user-images.githubusercontent.com/24984194/201972327-9375b80d-f7b1-4348-9729-f9d9c87503cd.png)
+![test result mody data 1 10 42 7ms bits](https://user-images.githubusercontent.com/24984194/202053739-ba78485e-c819-4b0a-9bd3-f78ae942e2f5.png)
