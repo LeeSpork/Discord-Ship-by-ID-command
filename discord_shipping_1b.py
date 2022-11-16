@@ -12,11 +12,12 @@ version 1B.0.1
 # Adjust values until you are happy with the Min, Max, and Mean computed from the sample data.
 # Note that WEIGHT_01 is the only one that reduces the compatability, basically.
 WEIGHT_00 = 1 # maybe don't touch
-WEIGHT_01 = 30
-WEIGHT_11 = 80
+WEIGHT_01 = 10
+WEIGHT_11 = 44
 
 # Threshold for the bot to combine their two names when using the `ship` function.
-SHIP_THRESHOLD = 0.75
+SHIP_THRESHOLD = 0.75 # love?!
+SHIP_NO_THRESHOLD =  0.25 # oh nao!!
 
 # Which bits of the Snowflake are used/ignored when computing "compatability" of user's Discord IDs?
 COMPATABILITY_BIT_MASK = ( # https://discord.com/developers/docs/reference
@@ -92,7 +93,7 @@ def ship(name1:str, discord_id_1:int, name2:str, discord_id_2:int) -> str:
     string = f"O nível de amor é {compatability:.0%}."
     if (compatability > SHIP_THRESHOLD):
         string += f" \"{ship_names(name1, name2)}\"?!"
-    else:
+    elif (compatability < SHIP_NO_THRESHOLD):
         string += " Oh não..."
     return string
 
@@ -124,6 +125,8 @@ def debug_all_compatabilities(samples=SAMPLE_IDS, show_all_values=True, alert_10
     names = []
     
     num_100_percent = 0
+    num_above_threshold = 0
+    num_bellow_threshold = 0
     
     n = len(samples)
     
@@ -159,17 +162,25 @@ def debug_all_compatabilities(samples=SAMPLE_IDS, show_all_values=True, alert_10
                 
             names.append(f"{a[1]} and {b[1]}")
             
-            if (v == 1):
-                num_100_percent += 1
-                if (alert_100):
-                    print(f"<@{a[0]}> and <@{b[0]}> have a compatability of 100%.")
+            if (v > SHIP_THRESHOLD):
+                num_above_threshold += 1
+                
+                if (v == 1):
+                    num_100_percent += 1
+                    if (alert_100):
+                        print(f"<@{a[0]}> and <@{b[0]}> have a compatability of 100%.")
+            
+            elif (v < SHIP_NO_THRESHOLD):
+                num_bellow_threshold += 1
     
     # Display stats
     print(f"Completed computing {len(values)} pairings.")
     print(f"Min : {minimum}")
     print(f"Max : {maximum}")
     print(f"Mean: {sum(values)/len(values)}")
-    print(f"{num_100_percent} ({num_100_percent/len(values):.10%}) pairings have 100% compatability.")
+    print(f"{num_bellow_threshold} ({num_bellow_threshold/len(values):.3%}) pairings are under the Oh No! threshold.")
+    print(f"{num_above_threshold} ({num_above_threshold/len(values):.3%}) pairings are over the love threshold.")
+    print(f"{num_100_percent} ({num_100_percent/len(values):.3%}) pairings have 100% compatability.")
     
     # Display the result of every matching, in order.
     if (show_all_values):
